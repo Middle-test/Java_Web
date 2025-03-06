@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tlias智能学习辅助系统</title>
+  <style>
+    /* 导航栏样式 */
+    .navbar{
+      background-color: rgb(163, 162, 162);/* 背景色设置为灰色 */
+
+      display: flex;/*布局方式设置为flex弹性布局*/
+      justify-content: space-between;/* 左右对齐 */
+      
+      padding: 10px;/* 内边距 */
+      align-items: center;/* 垂直居中 */
+    }
+
+    .navbar h1{
+      margin: 0;/* 外边距 */
+      font-weight: bold;/* 字体加粗 */
+      color: white;
+      font-family: "楷体";/* 设置字体为楷体 */
+    }
+
+   .navbar a{
+      color: #fff;/* 文字颜色 */
+      text-decoration: none;/* 去除下划线 */;
+    }
+
+    /* 搜索表单区域样式 */
+    .search-form{
+      display: flex;/* 布局方式设置为flex弹性布局 */
+      flex-wrap: nowrap;/* 防止内容换行*/
+      align-items: center;/* 垂直居中 */
+      gap: 10px;/* 元素之间的间隔 */
+      margin-top: 20px;
+      margin-bottom: 20px;
+     
+    }
+
+    .search-form input[type="text"],.search-form select{
+      padding: 5px;
+      width: 300px;
+       /* 文字设置 */
+       font-size: 16px;
+      font-family: "微软雅黑";
+    }
+
+    .btn{
+      /* 按钮放在搜索表单的右侧 */
+      margin-left: 20px;
+      display: flex;
+      justify-content: center;
+      width: 100px;
+      height: 30px;
+      /* 文字设置 */
+      font-size: 16px;
+      font-family: "微软雅黑";
+    }
+    
+
+    /* 表格数据展示区域样式 */
+    table{
+      border-collapse: collapse;/* 边框合并 */
+      width: 100%;/* 宽度为100% */
+      margin: 20px 0;/* 外边距 */
+    }
+
+    th,td {
+      border: 1px solid #ddd;/* 边框 */
+      padding: 8px;/* 内边距 */
+      text-align: center;/* 文字居中 */
+    }
+
+    th{
+      background-color: #f2f2f2;/* 背景色 */
+      font-weight: bold;//* 字体加粗 */
+    }
+
+    tr:nth-child(even){
+      background-color: #f2f2f2;/* 偶数行背景色 */
+    }
+
+   .avatar{
+    width: 50px;
+    height: 50px;
+   }
+
+   /* 页脚样式 */
+   .footer{
+      background-color: rgb(163, 162, 162); /* 背景色 */
+      color: #fff; /* 文字颜色 */
+      text-align: center; /* 文字居中 */
+      padding: 10px; /* 内边距 */
+      /* 让页脚置底 */
+      position: fixed;/*固定定位*/
+      width: 80%;/* 宽度为80% */
+      bottom: 0;/* 底部对齐 */
+   }
+
+   #container{
+    width: 80%;
+    margin: 0 auto;
+   }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <!-- 顶部导航栏 -->
+   <div class="navbar">
+    <h1>Tlias智能学习辅助系统</h1>
+    <a href="#">退出登录</a>
+ </div>
+
+ <!-- 搜索表单区域 -->
+  <form class="search-form" action="\save" method="post">
+    <label for="name">姓名</label>
+    <input type="text" id="name" name="name" placeholder="请输入姓名" required>
+
+    <label for="gender">性别</label>
+    <select id="gender" name="gender">
+      <option value="male">男</option>
+      <option value="female">女</option>
+    </select>
+
+    <label for="postion">职位</label>
+    <select name="postion" id="postion">
+      <option value="1">教师</option>
+      <option value="2">学生</option>
+    </select>
+
+    <input class="btn" type="submit" value="查询">
+    <input class="btn" type="reset" value="重置">
+  </form>
+
+  <!-- 表格数据展示区域 -->
+  <table>
+    <!-- 表头 -->
+    <thead>
+      <tr>
+        <!-- th定义表头单元格 -->
+        <th>姓名</th>
+        <th>性别</th>
+        <th>头像</th>
+        <th>职位</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <!-- 表格主体内容 -->
+    <tbody>
+      <tr>
+        <!-- td定义表格单元格 -->
+        <td>张三</td>
+        <td>男</td>
+        <td><img src="img/1.png" class="avatar" alt="头像" ></td></td>
+        <td>教师</td>
+        <td class="action-buttons">
+          <button type="button">编辑</button>
+          <button type="button">删除</button>
+        </td>
+      </tr>
+      <tr>
+        <td>李四</td>
+        <td>女</td>
+        <td><img src="img/1.png" class="avatar" alt="头像" ></td></td>
+        <td>学生</td>
+        <td class="action-buttons">
+          <button type="button">编辑</button>
+          <button type="button">删除</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 页脚底部版权区域 -->
+  <footer class="footer">
+    <p>xxxx教育有限公司</p>
+    <p>版权所有 Copyright © 2025 Tlias智能学习辅助系统 All Rights Reserved </p>
+  </footer>
+  </div>
+</body>
+</html>

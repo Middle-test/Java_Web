@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tlias智能学习辅助系统</title>
+  <style>
+    /* 导航栏样式 */
+    .navbar{
+      background-color: rgb(163, 162, 162);/* 背景色设置为灰色 */
+
+      display: flex;/*布局方式设置为flex弹性布局*/
+      justify-content: space-between;/* 左右对齐 */
+      
+      padding: 10px;/* 内边距 */
+      align-items: center;/* 垂直居中 */
+    }
+
+    .navbar h1{
+      margin: 0;/* 外边距 */
+      font-weight: bold;/* 字体加粗 */
+      color: white;
+      font-family: "楷体";/* 设置字体为楷体 */
+    }
+
+   .navbar a{
+      color: #fff;/* 文字颜色 */
+      text-decoration: none;/* 去除下划线 */;
+    }
+
+    /* 搜索表单区域样式 */
+    .search-form{
+      display: flex;/* 布局方式设置为flex弹性布局 */
+      flex-wrap: nowrap;/* 防止内容换行*/
+      align-items: center;/* 垂直居中 */
+      gap: 10px;/* 元素之间的间隔 */
+      margin: 20px,0; /* 外边距 */
+    }
+
+    .search-form input[type="text"],.search-form select{
+      padding: 5px;
+      width: 300px;
+    }
+
+    .search-form button{
+      padding: 5px 15px;
+      width: 300px;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+   <div class="navbar">
+      <h1>Tlias智能学习辅助系统</h1>
+      <a href="#">退出登录</a>
+   </div>
+
+   <!-- 搜索表单区域 -->
+    <form class="search-form" action="\save" method="post">
+      <label for="name">姓名</label>
+      <input type="text" id="name" name="name" placeholder="请输入姓名" required>
+
+      <label for="gender">性别</label>
+      <select id="gender" name="gender">
+        <option value="male">男</option>
+        <option value="female">女</option>
+      </select>
+
+      <label for="postion">职位</label>
+      <select name="postion" id="postion">
+        <option value="1">教师</option>
+        <option value="2">学生</option>
+      </select>
+
+      <input type="submit" value="查询">
+      <input type="reset" value="重置">
+    </form>
+</body>
+</html>
