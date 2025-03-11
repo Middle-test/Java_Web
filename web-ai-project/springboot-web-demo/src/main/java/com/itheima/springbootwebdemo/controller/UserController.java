@@ -47,6 +47,7 @@ public class UserController {
     //选择注入哪一个bean
     @Qualifier("userServiceImpl")
 //    或者@Resource(name = "userServiceImpl")
+
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
