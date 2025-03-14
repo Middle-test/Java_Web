@@ -26,6 +26,7 @@ public interface DeptService {
 
     /**
      * 根据id查询部门信息
+     *
      * @param id
      * @return
      */
@@ -33,6 +34,7 @@ public interface DeptService {
 
     /**
      * 根据id修改部门信息
+     *
      * @param dept
      */
     void update(Dept dept);

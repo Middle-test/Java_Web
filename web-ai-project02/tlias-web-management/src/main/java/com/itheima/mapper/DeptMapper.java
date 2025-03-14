@@ -35,6 +35,7 @@ public interface DeptMapper {
 
     /**
      * 添加部门
+     *
      * @param dept
      */
     @Insert("insert into dept(name, create_time, update_time) VALUES (#{name},#{createTime},#{updateTime})")
@@ -42,6 +43,7 @@ public interface DeptMapper {
 
     /**
      * 根据id查询部门
+     *
      * @param id
      */
     @Select("select id, name, create_time, update_time from dept where id = #{id}")
@@ -49,6 +51,7 @@ public interface DeptMapper {
 
     /**
      * 根据id修改部门
+     *
      * @param dept
      */
     @Update("update dept set name = #{name}, update_time = #{updateTime} where id = #{id}")

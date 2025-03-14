@@ -31,6 +31,7 @@ public class DeptServiceImpl implements DeptService {
 
     /**
      * 添加部门
+     *
      * @param dept
      */
     @Override
@@ -45,6 +46,7 @@ public class DeptServiceImpl implements DeptService {
 
     /**
      * 根据id查询部门
+     *
      * @param id
      * @return
      */
