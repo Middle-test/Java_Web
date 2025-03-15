@@ -4,13 +4,12 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.itheima.mapper.EmpExprMapper;
 import com.itheima.mapper.EmpMapper;
-import com.itheima.pojo.Emp;
-import com.itheima.pojo.EmpExpr;
-import com.itheima.pojo.EmpQueryParam;
-import com.itheima.pojo.PageResult;
+import com.itheima.pojo.*;
+import com.itheima.service.EmpLogService;
 import com.itheima.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
@@ -22,6 +21,8 @@ public class EmpServiceImpl implements EmpService {
     private EmpMapper empMapper;
     @Autowired
     private EmpExprMapper empExprMapper;
+    @Autowired
+    private EmpLogService empLogService;
 
     //----------------原始分页查询实现-----------------
 //    @Override
@@ -66,19 +67,27 @@ public class EmpServiceImpl implements EmpService {
         return new PageResult<Emp>(p.getTotal(), p.getResult());
     }
 
+    @Transactional(rollbackFor = RuntimeException.class) //事务控制,默认RuntimeException时回滚
     @Override
     public void save(Emp emp) {
-        //1、保存员工基本信息
-        emp.setCreateTime(LocalDateTime.now());
-        emp.setUpdateTime(LocalDateTime.now());
-        empMapper.insert(emp);
+        try {
+            //1、保存员工基本信息
+            emp.setCreateTime(LocalDateTime.now());
+            emp.setUpdateTime(LocalDateTime.now());
+            empMapper.insert(emp);
 
-        //2、保存员工工作信息
-        List<EmpExpr> exprList = emp.getEmpExprList();
-        if (!CollectionUtils.isEmpty(exprList)) {
-            //遍历集合，为每个员工工作信息设置员工id(empId)
-            exprList.forEach(expr -> expr.setEmpId(emp.getId()));
-            empExprMapper.insertBatch(exprList);
+            //2、保存员工工作信息
+            List<EmpExpr> exprList = emp.getEmpExprList();
+            if (!CollectionUtils.isEmpty(exprList)) {
+                //遍历集合，为每个员工工作信息设置员工id(empId)
+                exprList.forEach(expr -> expr.setEmpId(emp.getId()));
+                empExprMapper.insertBatch(exprList);
+            }
+        } finally {
+            //3、记录操作日志,不管成功还是失败，都要记录日志
+            // （注意，由于受save事务的影响，回滚后无法记录日志，需要在insertLog设置新事务）
+            EmpLog empLog = new EmpLog(null,LocalDateTime.now(),"新增员工："+emp);
+            empLogService.insertLog(empLog);
         }
     }
 }
