@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 员工管理
  */
@@ -48,5 +50,42 @@ public class EmpController {
         return Result.success();
     }
 
+    /**
+     * 根据id删除员工 — 数组
+     */
+   /* @DeleteMapping
+    public Result delete(Integer[] ids) {
+        log.info("根据id删除员工：{}", Arrays.toString(ids));
+        return Result.success();
+    }*/
 
+    /**
+     * 根据id删除员工 - 集合
+     */
+    @DeleteMapping
+    public Result delete(@RequestParam List<Integer> ids) {
+        log.info("根据id删除员工：{}", ids);
+        empService.delete(ids);
+        return Result.success();
+    }
+
+    /**
+     * 根据id查询员工信息
+     */
+    @GetMapping("/{id}")
+    public Result getInfo(@PathVariable Integer id) {
+        log.info("根据id查询员工信息：{}", id);
+        Emp emp = empService.getInfo(id);
+        return Result.success(emp);
+    }
+
+    /**
+     * 修改员工信息
+     */
+    @PutMapping
+    public Result update(@RequestBody Emp emp) {
+        log.info("修改员工信息：{}", emp);
+        empService.update(emp);
+        return Result.success();
+    }
 }

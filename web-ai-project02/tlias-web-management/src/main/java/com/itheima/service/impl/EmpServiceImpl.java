@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -77,17 +78,53 @@ public class EmpServiceImpl implements EmpService {
             empMapper.insert(emp);
 
             //2、保存员工工作信息
-            List<EmpExpr> exprList = emp.getEmpExprList();
+            List<EmpExpr> exprList = emp.getExprList();
             if (!CollectionUtils.isEmpty(exprList)) {
                 //遍历集合，为每个员工工作信息设置员工id(empId)
-                exprList.forEach(expr -> expr.setEmpId(emp.getId()));
+                exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
                 empExprMapper.insertBatch(exprList);
             }
         } finally {
             //3、记录操作日志,不管成功还是失败，都要记录日志
             // （注意，由于受save事务的影响，回滚后无法记录日志，需要在insertLog设置新事务）
-            EmpLog empLog = new EmpLog(null,LocalDateTime.now(),"新增员工："+emp);
+            EmpLog empLog = new EmpLog(null, LocalDateTime.now(), "新增员工：" + emp);
             empLogService.insertLog(empLog);
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void delete(List<Integer> ids) {
+        //1、删除员工基本信息
+        empMapper.deleteByIds(ids);
+
+        //2、删除员工工作经历
+        empExprMapper.deleteByEmpIds(ids);
+    }
+
+    @Override
+    public Emp getInfo(Integer id) {
+        return empMapper.getById(id);
+    }
+
+    /**
+     * 修改员工信息
+     *
+     * @param emp
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void update(Emp emp) {
+        //1、根据ID修改员工基本信息
+        emp.setUpdateTime(LocalDateTime.now());
+        empMapper.updateById(emp);
+
+        //2、根据ID修改员工工作经历信息（先删除再添加）
+        empExprMapper.deleteByEmpIds(Arrays.asList(emp.getId()));
+        List<EmpExpr> exprList = emp.getExprList();
+        if (!CollectionUtils.isEmpty(exprList)) {
+            exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
+            empExprMapper.insertBatch(exprList);
         }
     }
 }
